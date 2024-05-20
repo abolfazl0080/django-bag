@@ -38,8 +38,8 @@ class BagModel(models.Model):
     title = models.CharField(max_length=80, verbose_name='عنوان')
     slug = models.SlugField(max_length=80, db_index=True, unique=True, verbose_name='عنوان در url')
     text = models.TextField(blank=True, null=True, verbose_name='توضیحات')
-    category = models.ManyToManyField(CategoryModel, related_name='bags', verbose_name='دسته بندی')
-    label = models.ManyToManyField(LabelModel, related_name='bags', verbose_name='برچسب')
+    category = models.ManyToManyField(CategoryModel, blank=True, related_name='bags', verbose_name='دسته بندی')
+    label = models.ManyToManyField(LabelModel, blank=True, related_name='bags', verbose_name='برچسب')
     status = models.CharField(
         max_length=1, 
         choices=STATUS_CHOICES, 
