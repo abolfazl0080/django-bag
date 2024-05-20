@@ -1,3 +1,7 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+admin.site.register(models.BagModel)
+admin.site.register(models.LabelModel)
+admin.site.register(models.ImageOfBagModel)
+admin.site.register(models.CategoryModel)

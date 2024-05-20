@@ -25,6 +25,11 @@ class LabelModel(models.Model):
         return self.title
 
 
+class BagManager(models.Manager):
+    def published(self):
+        return self.filter(status='p')
+
+
 class BagModel(models.Model):
     STATUS_CHOICES = (
         ('p', 'انتشار'),
@@ -33,12 +38,12 @@ class BagModel(models.Model):
     title = models.CharField(max_length=80, verbose_name='عنوان')
     slug = models.SlugField(max_length=80, db_index=True, unique=True, verbose_name='عنوان در url')
     text = models.TextField(blank=True, null=True, verbose_name='توضیحات')
-    category = models.ManyToManyField(CategoryModel, related_name='category_bag', verbose_name='دسته بندی')
-    label = models.ManyToManyField(CategoryModel, related_name='label_bags', verbose_name='برچسب')
+    category = models.ManyToManyField(CategoryModel, related_name='bags', verbose_name='دسته بندی')
+    label = models.ManyToManyField(LabelModel, related_name='bags', verbose_name='برچسب')
     status = models.CharField(
         max_length=1, 
         choices=STATUS_CHOICES, 
-        default='p',
+        default='d',
         verbose_name='وضعیت'
     )
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -50,6 +55,8 @@ class BagModel(models.Model):
     
     def __str__(self) -> str:
         return self.title
+    
+    objects = BagManager()
 
 
 class ImageOfBagModel(models.Model):
